@@ -73,7 +73,7 @@ $ sudo vim /etc/nginx/conf.d/default.conf
 ```bash
 server {
     listen 80;
-    server_name i8b108.p.ssafy.io;
+    server_name {도메인 또는 PUBLIC IP};
 
     location / {
         proxy_pass localhost:9999;
@@ -95,7 +95,7 @@ $ sudo snap install certbot --classic
 ### certbot으로 키 발급받기
 
 ```bash
-$ sudo certbot --nginx -d i8B108.p.ssafy.io
+$ sudo certbot --nginx -d {도메인 또는 PUBLIC IP}
 
 # 그 다음 자신이 인증 받는데 사용할 이메일을 입력하면 된다.
 ```
@@ -104,7 +104,7 @@ $ sudo certbot --nginx -d i8B108.p.ssafy.io
 
 ```bash
 server {
-    server_name i8B108.p.ssafy.io;
+    server_name {도메인 또는 PUBLIC IP};
 
     location / {
         proxy_pass http://localhost:8080;
@@ -114,19 +114,19 @@ server {
     }
 
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/i8b108.p.ssafy.io/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/i8b108.p.ssafy.io/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/{도메인 또는 PUBLIC IP}/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/{도메인 또는 PUBLIC IP}/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
 }
 server {
-    if ($host = i8b108.p.ssafy.io) {
+    if ($host = {도메인 또는 PUBLIC IP}) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
     listen 80;
-    server_name i8B108.p.ssafy.io;
+    server_name {도메인 또는 PUBLIC IP};
     return 404; # managed by Certbot
 
 }
@@ -172,14 +172,14 @@ $ sudo vim /etc/nginx/conf.d/default.conf
 ```
 server {
     #name of the server
-    server_name i8b108.p.ssafy.io;
+    server_name {도메인 또는 PUBLIC IP};
 
     # listening port
     listen 443 ssl; # managed by Certbot
 
     # ssl keys
-    ssl_certificate     /etc/letsencrypt/live/i8b108.p.ssafy.io/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/i8b108.p.ssafy.io/privkey.pem; # managed by Certbot
+    ssl_certificate     /etc/letsencrypt/live/{도메인 또는 PUBLIC IP}/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/{도메인 또는 PUBLIC IP}/privkey.pem; # managed by Certbot
     include             /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam         /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
 
@@ -224,7 +224,7 @@ server {
 server {
     listen 80;
 
-    if ($host = i8b108.p.ssafy.io) {
+    if ($host = {도메인 또는 PUBLIC IP}) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
@@ -400,7 +400,7 @@ $ sudo vim .env
 ### 다음과 같이 환경변수 값 변경
 
 ```bash
-DOMAIN_OR_PUBLIC_IP=i8b108.p.ssafy.io
+DOMAIN_OR_PUBLIC_IP={도메인 또는 PUBLIC IP}
 OPENVIDU_SECRET=studify
 CERTIFICATE_TYPE=letsencrypt
 LETSENCRYPT_EMAIL=soulb9@naver.com
